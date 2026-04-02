@@ -1,0 +1,18 @@
+<main class="main">
+  <div class="content">
+    <div class="left-side">
+      <h1>Hello, {{ title() }}</h1>
+      <p>Designation: <strong>{{ profession() }}</strong></p>
+
+      <div class="nav-container">
+        <button routerLink="/">Go to Home</button>
+        <button routerLink="/about">Go to About</button>
+      </div>
+
+      <div class="outlet-container">
+        <router-outlet />
+      </div>
+
+    </div>
+  </div>
+</main>
