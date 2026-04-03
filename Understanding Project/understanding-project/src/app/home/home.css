@@ -54,3 +54,25 @@ input[type="checkbox"] {
 .input-group button:hover {
     background-color: #218838;
 }
+
+/* The base style */
+li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s ease;
+}
+
+/* The dynamic style applied only when task.completed is true */
+li.is-done {
+    background-color: #f8fff9;
+    color: #888;
+}
+
+.success-msg {
+    color: #28a745;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+}
