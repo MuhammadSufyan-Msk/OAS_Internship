@@ -1,21 +1,43 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject, computed } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TaskService } from '../task'; 
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-  protected readonly tasks = signal([
-    { id: 1, title: 'Learn Angular Signals', completed: true },
-    { id: 2, title: 'Setup Routing in Apps', completed: true },
-    { id: 3, title: 'Integrate RESTful APIs', completed: false },
-    { id: 4, title: 'Master RxJS Observables', completed: false },
-  ]);
-  toggleTask(id: number) {
-    this.tasks.update(oldTasks =>
-      oldTasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t)
-    );
+  private taskService = inject(TaskService);
+  protected tasks = this.taskService.tasks;
+  protected readonly newTaskTitle = signal("");
+
+  // Computed signals for automatic stat updates
+  protected totalCount = computed(() => this.tasks().length);
+  protected pendingCount = computed(() =>
+    this.tasks().filter(t => !t.completed).length
+  );
+
+  onAddTask() {
+    if (this.newTaskTitle().trim()) {
+      this.taskService.addTask(this.newTaskTitle());
+      this.newTaskTitle.set('');
+    }
+  }
+
+  onToggleTask(id: number) {
+    this.taskService.toggleTask(id);
+  }
+
+  // FIXED: Added the delete bridge
+  onDeleteTask(id: number) {
+    this.taskService.deleteTask(id);
+  }
+
+  // FIXED: Added the clear all bridge
+  onClearAll() {
+    this.taskService.clearAll();
   }
 }

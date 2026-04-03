@@ -1,9 +1,25 @@
 <div class="task-card">
     <h2>My Internship Roadmap</h2>
+
+    <div class="input-group">
+        <input type="text" [(ngModel)]="newTaskTitle" placeholder="Enter new task..." (keyup.enter)="onAddTask()">
+
+        <button (click)="onAddTask()">Add Task</button>
+    </div>
+
+    <div class="stats-bar">
+        <p>Total: {{ totalCount() }} | Pending: {{ pendingCount() }}</p>
+
+        @if (totalCount() > 0) {
+        <button (click)="onClearAll()" class="clear-btn">Clear All</button>
+        }
+    </div>
+
     <ul>
         @for (task of tasks(); track task.id) {
         <li [style.text-decoration]="task.completed ? 'line-through' : 'none'">
-            <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task.id)">
+            <input type="checkbox" [checked]="task.completed" (change)="onToggleTask(task.id)">
+            <button (click)="onDeleteTask(task.id)" class="delete-btn">🗑️</button>
             {{ task.title }}
         </li>
         } @empty {
