@@ -4,10 +4,15 @@
       <h1>Hello, {{ title() }}</h1>
       <p>Designation: <strong>{{ profession() }}</strong></p>
 
-      <div class="nav-container">
-        <button routerLink="/">Go to Home</button>
-        <button routerLink="/about">Go to About</button>
-      </div>
+      <nav class="nav-container">
+        <button routerLink="/" routerLinkActive="active-btn" [routerLinkActiveOptions]="{exact: true}">
+          Go to Home
+        </button>
+
+        <button routerLink="/about" routerLinkActive="active-btn">
+          Go to About
+        </button>
+      </nav>
 
       <div class="outlet-container">
         <router-outlet />

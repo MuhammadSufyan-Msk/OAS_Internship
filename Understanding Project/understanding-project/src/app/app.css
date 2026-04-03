@@ -23,3 +23,34 @@ button:hover {
     border-radius: 8px;
     min-height: 200px;
 }
+
+.nav-container {
+    display: flex;
+    gap: 15px;
+    /* Adds space between the buttons */
+    margin: 20px 0;
+    /* Adds space above and below the nav */
+}
+
+button {
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    background-color: white;
+    color: #007bff;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: #f0f7ff;
+}
+
+/* This class is applied automatically by Angular */
+.active-btn {
+    background-color: #007bff !important;
+    color: white !important;
+    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+    /* Adds a nice depth */
+}
