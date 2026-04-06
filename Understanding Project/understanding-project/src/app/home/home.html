@@ -16,17 +16,14 @@
     </div>
 
     <ul>
-        @for (task of tasks(); track task.id) {
-        <li [class.is-done]="task.completed">
-            <input type="checkbox" [checked]="task.completed" (change)="onToggleTask(task.id)">
-            <span>{{ task.title }}</span>
-            <button (click)="onDeleteTask(task.id)" class="delete-btn">🗑️</button>
-        </li>
+        @for (item of tasks(); track item.id) {
+        <app-task-item [task]="item" (toggle)="handleToggle($event)" (delete)="handleDelete($event)">
+        </app-task-item>
         } @empty {
-        <li>No tasks found. Time to relax!</li>
+        <li>No tasks yet.</li>
         }
-
     </ul>
+
     <div class="message-container">
         @if (totalCount() > 0 && pendingCount() === 0) {
         <p class="success-msg">🎉 All tasks completed! Great job, MSK!</p>
@@ -34,4 +31,6 @@
         <p class="info-msg">You have {{ pendingCount() }} tasks remaining for your internship.</p>
         }
     </div>
+
+    <button (click)="onLoadRemote()" class="api-btn">Load Live Data</button>
 </div>
