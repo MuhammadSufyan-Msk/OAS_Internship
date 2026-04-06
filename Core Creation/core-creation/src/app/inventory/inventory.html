@@ -1,1 +1,4 @@
-<app-core-table [columns]="productCol" [data]="productData"></app-core-table>
+<h2>Inventory Management</h2>
+<app-core-table [columns]="inventoryCols" [data]="inventoryData()" (onAddRow)="addStock($event)"
+    (onDeleteRow)="removeStock($event)">
+</app-core-table>

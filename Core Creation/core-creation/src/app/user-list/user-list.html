@@ -1,1 +1,2 @@
-<app-core-table [columns]="userCols" [data]="userData"></app-core-table>
+<app-core-table [columns]="userCols" [data]="userData()" (onAddRow)="addNewUser($event)"
+    (onDeleteRow)="removeUser($event)"> </app-core-table>
