@@ -1,11 +1,86 @@
+/* edit-modal.css */
+
+/* 1. Add some modern styling to the whole Dialog container */
+:host {
+    display: block;
+    border-radius: 8px;
+    /* Slightly rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    /* Modern, soft shadow */
+}
+
+/* 2. Standard Material Dialog Header styling */
+[mat-dialog-title] {
+    margin: 0;
+    padding: 24px 24px 16px !important;
+    /* Material standard padding */
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #2D3748;
+    /* Dark gray for text */
+}
+
+/* 3. Modernizing the form inputs layout */
+mat-dialog-content {
+    padding: 16px 24px 24px !important;
+    /* Material standard padding */
+}
+
 .edit-form-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding-top: 15px;
-    min-width: 300px;
+    /* Stack inputs vertically */
+    gap: 20px;
+    /* Space between the 'Name' and 'Role' inputs */
+    min-width: 350px;
+    /* Force the modal to be wider and more stable */
 }
 
-.full-width {
+/* 4. Styling the form field label */
+mat-label {
+    color: #4A5568 !important;
+    /* Medium gray */
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* 5. Modernize input fields */
+mat-form-field {
     width: 100%;
+    /* Force inputs to take up full modal width */
+}
+
+mat-form-field[appearance="outline"] {
+    background-color: white;
+    border-radius: 6px;
+}
+
+/* Ensure consistent font throughout */
+mat-form-field * {
+    font-family: Roboto, "Helvetica Neue", sans-serif !important;
+}
+
+/* 6. Styling the Buttons for a professional look */
+.mat-dialog-actions {
+    /* This is handled globally in Step 1, but we can override it here if needed */
+}
+
+/* "Update Data" button - matching your dark theme */
+button[color="primary"][mat-raised-button] {
+    background-color: #1a1a1a !important;
+    /* Dark color to match your 'Add Row' buttons */
+    color: white !important;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 6px;
+}
+
+/* "Cancel" button */
+button[mat-button] {
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    color: #4A5568;
 }

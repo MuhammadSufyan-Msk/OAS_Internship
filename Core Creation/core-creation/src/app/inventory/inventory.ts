@@ -1,15 +1,22 @@
-import { Component, effect, signal, afterNextRender } from '@angular/core';
-import { CoreTableComponent } from '../core/core-table/core-table';
+import { Component, effect, signal, afterNextRender, inject } from '@angular/core';
 import { TableColumn } from '../table';
+import { CoreTableComponent } from '../core/core-table/core-table';
+import { FormsModule } from '@angular/forms';
+// 1. Import Material Dialog tools
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EditModalComponent } from '../edit-modal/edit-modal';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CoreTableComponent],
+  imports: [CoreTableComponent, FormsModule, MatDialogModule],
   templateUrl: './inventory.html',
   styleUrl: './inventory.css',
 })
 export class Inventory {
+  // 2. Inject the Dialog Service
+  private dialog = inject(MatDialog);
+
   inventoryCols: TableColumn[] = [
     { key: 'id', label: 'ID' },
     { key: 'code', label: 'Product Code' },
@@ -17,7 +24,6 @@ export class Inventory {
   ];
 
   inventoryData = signal<any[]>([]);
-  // FIX: Change this to a Signal so the effect can track it reactively
   private isLoaded = signal(false);
   private readonly STORAGE_KEY = 'management_inventory';
 
@@ -25,50 +31,42 @@ export class Inventory {
     afterNextRender(() => {
       const data = this.loadFromStorage();
       this.inventoryData.set(data);
-      // Mark as loaded AFTER the data is set
       this.isLoaded.set(true);
     });
 
     effect(() => {
-      // The effect now tracks both: isLoaded() and inventoryData()
       if (this.isLoaded() && typeof window !== 'undefined') {
         const data = this.inventoryData();
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
-        console.log('Saved to storage:', data); // Debugging helper
       }
     });
   }
 
-  private loadFromStorage(): any[] {
-    // 1. Server-side guard
-    if (typeof window === 'undefined' || !window.localStorage) {
-      return this.getDefaultData();
-    }
+  // 3. Method to open the Material Dialog for Inventory items
+  openEditStock(item: any) {
+    const dialogRef = this.dialog.open(EditModalComponent, {
+      width: '450px',
+      data: item, // Pass the stock item (e.g., A101) to the modal
+      disableClose: true
+    });
 
-    // 2. Get data from browser
-    const saved = localStorage.getItem(this.STORAGE_KEY);
-
-    // 3. If nothing exists at all, return defaults
-    if (!saved) return this.getDefaultData();
-
-    try {
-      const parsed = JSON.parse(saved);
-
-      // 4. CRITICAL FIX: If the list is empty ([]), return defaults 
-      // instead of showing a blank table.
-      return (parsed && parsed.length > 0) ? parsed : this.getDefaultData();
-
-    } catch (e) {
-      return this.getDefaultData();
-    }
+    dialogRef.afterClosed().subscribe((updatedItem) => {
+      if (updatedItem) {
+        this.updateStock(updatedItem);
+      }
+    });
   }
 
-  private getDefaultData() {
-    return [
-      { id: 1, code: 'A101', price: 5000 },
-      { id: 2, code: 'B202', price: 12000 },
-    ];
+  // 4. Update the signal with edited stock data
+  updateStock(updatedData: any) {
+    this.inventoryData.update((current) =>
+      current.map((item) =>
+        item.id === updatedData.id ? updatedData : item
+      )
+    );
   }
+
+  // ... (Keep loadFromStorage, getDefaultData, addStock, and removeStock as they are)
 
   addStock(newEntry: any) {
     this.inventoryData.update((current) => {
@@ -79,5 +77,26 @@ export class Inventory {
 
   removeStock(id: number | string) {
     this.inventoryData.update((current) => current.filter((p) => p.id !== id));
+  }
+
+  private loadFromStorage(): any[] {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      return this.getDefaultData();
+    }
+    const saved = localStorage.getItem(this.STORAGE_KEY);
+    if (!saved) return this.getDefaultData();
+    try {
+      const parsed = JSON.parse(saved);
+      return (parsed && parsed.length > 0) ? parsed : this.getDefaultData();
+    } catch (e) {
+      return this.getDefaultData();
+    }
+  }
+
+  private getDefaultData() {
+    return [
+      { id: 1, code: 'A101', price: 5000 },
+      { id: 2, code: 'B202', price: 12000 },
+    ];
   }
 }

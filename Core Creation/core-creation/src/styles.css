@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+/* styles.css */
+/* 1. Import a basic Material Theme (or your custom one) */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* 2. Enable Roboto font (standard for Material Design) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* 3. Apply basic resets to the body */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* Modern sans-serif fallback */
+    background-color: #f7fafc;
+    /* Optional: light background for the whole app */
+}
+
+/* 4. Center-align standard Material Dialog actions globally */
+mat-dialog-actions[align="end"] {
+    justify-content: flex-end !important;
+    /* Ensure buttons are right-aligned */
+    gap: 12px;
+    /* Spacing between buttons */
+    padding: 16px 24px 24px !important;
+    /* Standard Material padding */
+}

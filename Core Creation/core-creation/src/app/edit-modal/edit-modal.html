@@ -3,7 +3,7 @@
 <mat-dialog-content>
     <div class="edit-form-container">
         @for (key of objectKeys; track key) {
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline">
             <mat-label>{{ key | titlecase }}</mat-label>
             <input matInput [(ngModel)]="tempItem[key]">
         </mat-form-field>
