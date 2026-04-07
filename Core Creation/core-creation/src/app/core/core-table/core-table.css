@@ -1,51 +1,112 @@
+/* Container & Background */
+.dashboard-container {
+    padding: 40px;
+    background-color: #f9fafb;
+    /* Soft background */
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* The Table Card */
+.table-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
 .custom-table {
     width: 100%;
     border-collapse: collapse;
+    text-align: left;
 }
 
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 10px;
+/* Professional Header */
+.custom-table th {
+    background-color: #fdfdfd;
+    padding: 14px 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    /* Muted grey */
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+}
+
+/* Clean Row Design */
+.custom-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+    font-size: 14px;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+/* Footer Entry Styling */
+tfoot {
+    background-color: #f9fafb;
 }
 
 .inline-input {
     width: 100%;
-    border: none;
-    background: transparent;
-    outline: none;
-    font-family: inherit;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
     font-size: 14px;
+    transition: all 0.2s;
+    background-color: white;
 }
 
 .inline-input:focus {
-    background: #f0f7ff;
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-tfoot {
-    background-color: #fafafa;
-}
-
+/* Buttons: Modern Flat Style */
 .add-btn {
-    background-color: #28a745;
-    color: white;
+    background-color: #111827;
+    /* Near Black */
+    color: #ffffff;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 4px;
+    transition: opacity 0.2s;
+}
+
+.add-btn:hover {
+    opacity: 0.85;
 }
 
 .delete-btn {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    padding: 6px 12px;
+    border-radius: 6px;
     font-size: 12px;
-    transition: background 0.2s;
+    cursor: pointer;
+    font-weight: 500;
 }
 
 .delete-btn:hover {
-    background-color: #cc0000;
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+}
+
+.next-id-preview {
+    background: #e5e7eb;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #4b5563;
+    font-family: monospace;
 }

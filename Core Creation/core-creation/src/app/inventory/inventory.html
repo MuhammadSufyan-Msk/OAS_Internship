@@ -1,4 +1,8 @@
-<h2 style="text-align: center;">Inventory Management</h2>
-<app-core-table [columns]="inventoryCols" [data]="inventoryData()" (onAddRow)="addStock($event)"
-    (onDeleteRow)="removeStock($event)">
-</app-core-table>
+<div class="container">
+    <h2>Inventory Data</h2>
+
+    <app-core-table [columns]="inventoryCols" [data]="inventoryData()" (onAddRow)="addStock($event)"
+        (onDeleteRow)="removeStock($event)">
+    </app-core-table>
+
+</div>

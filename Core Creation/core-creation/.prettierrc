@@ -3,7 +3,7 @@
   "singleQuote": true,
   "overrides": [
     {
-      "files": "*.html",
+      "files": "*.typescript",
       "options": {
         "parser": "angular"
       }

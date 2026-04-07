@@ -1,2 +1,11 @@
-<app-core-table [columns]="userCols" [data]="userData()" (onAddRow)="addNewUser($event)"
-    (onDeleteRow)="removeUser($event)"> </app-core-table>
+<div class="dashboard-container">
+    <div class="header-section">
+        <h2>Employee Data</h2>
+    </div>
+
+    <div class="table-card">
+        <app-core-table [columns]="userCols" [data]="userData()" (onAddRow)="addNewUser($event)"
+            (onDeleteRow)="removeUser($event)">
+        </app-core-table>
+    </div>
+</div>
