@@ -18,7 +18,7 @@ export class Inventory {
 
   inventoryData = signal<any[]>([]);
   // FIX: Change this to a Signal so the effect can track it reactively
-  private isLoaded = signal(false); 
+  private isLoaded = signal(false);
   private readonly STORAGE_KEY = 'management_inventory';
 
   constructor() {
@@ -26,7 +26,7 @@ export class Inventory {
       const data = this.loadFromStorage();
       this.inventoryData.set(data);
       // Mark as loaded AFTER the data is set
-      this.isLoaded.set(true); 
+      this.isLoaded.set(true);
     });
 
     effect(() => {
@@ -40,13 +40,24 @@ export class Inventory {
   }
 
   private loadFromStorage(): any[] {
+    // 1. Server-side guard
     if (typeof window === 'undefined' || !window.localStorage) {
       return this.getDefaultData();
     }
 
+    // 2. Get data from browser
     const saved = localStorage.getItem(this.STORAGE_KEY);
+
+    // 3. If nothing exists at all, return defaults
+    if (!saved) return this.getDefaultData();
+
     try {
-      return saved ? JSON.parse(saved) : this.getDefaultData();
+      const parsed = JSON.parse(saved);
+
+      // 4. CRITICAL FIX: If the list is empty ([]), return defaults 
+      // instead of showing a blank table.
+      return (parsed && parsed.length > 0) ? parsed : this.getDefaultData();
+
     } catch (e) {
       return this.getDefaultData();
     }
