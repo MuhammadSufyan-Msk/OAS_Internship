@@ -110,3 +110,19 @@ tfoot {
     color: #4b5563;
     font-family: monospace;
 }
+
+.edit-btn {
+    background-color: #3182ce;
+    /* Nice Blue */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #2b6cb0;
+}

@@ -1,11 +1,6 @@
-<div class="dashboard-container">
-    <div class="header-section">
-        <h2>Employee Data</h2>
-    </div>
+<div class="container">
+    <h2>Employee Data</h2>
 
-    <div class="table-card">
-        <app-core-table [columns]="userCols" [data]="userData()" (onAddRow)="addNewUser($event)"
-            (onDeleteRow)="removeUser($event)">
-        </app-core-table>
-    </div>
+    <app-core-table [columns]="userCols" [data]="userData()" (onAddRow)="addNewUser($event)"
+        (onDeleteRow)="removeUser($event)" (onEditRow)="openEditUser($event)"> </app-core-table>
 </div>

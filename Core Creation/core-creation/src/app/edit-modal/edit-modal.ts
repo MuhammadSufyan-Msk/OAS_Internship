@@ -1,50 +1,50 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-dialog',
+  selector: 'app-edit-modal',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
-  template: `
-    <h2 mat-dialog-title>Update Record</h2>
-    <mat-dialog-content>
-      @for (key of Object.keys(tempItem); track key) {
-        @if (key !== 'id') {
-          <mat-form-field appearance="outline" style="width: 100%; margin-bottom: 10px;">
-            <mat-label>{{ key | titlecase }}</mat-label>
-            <input matInput [(ngModel)]="tempItem[key]">
-          </mat-form-field>
-        }
-      }
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="onSave()">Update Data</button>
-    </mat-dialog-actions>
-  `
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ],
+  templateUrl: './edit-modal.html',
+  styleUrl: './edit-modal.css'
 })
-export class EditDialogComponent {
+export class EditModalComponent {
   tempItem: any;
-  Object = Object;
+  objectKeys: string[];
 
   constructor(
-    public dialogRef: MatDialogRef<EditDialogComponent>,
+    public dialogRef: MatDialogRef<EditModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    // Create a copy so we don't edit the main table live
+    // We clone the data using the Spread Operator (...) 
+    // This ensures the table doesn't update until you click 'Save'
     this.tempItem = { ...data };
-  }
 
-  onCancel(): void {
-    this.dialogRef.close();
+    // Generate inputs for all fields except 'id'
+    this.objectKeys = Object.keys(this.tempItem).filter(key => key !== 'id');
   }
 
   onSave(): void {
-    this.dialogRef.close(this.tempItem);
+    this.dialogRef.close(this.tempItem); // Send updated data back
+  }
+
+  onCancel(): void {
+    this.dialogRef.close(); // Close without saving
   }
 }

@@ -1,1 +1,17 @@
-<p>edit-modal works!</p>
+<h2 mat-dialog-title>Update Entry</h2>
+
+<mat-dialog-content>
+    <div class="edit-form-container">
+        @for (key of objectKeys; track key) {
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ key | titlecase }}</mat-label>
+            <input matInput [(ngModel)]="tempItem[key]">
+        </mat-form-field>
+        }
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSave()">Update Data</button>
+</mat-dialog-actions>

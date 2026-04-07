@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
         @for (col of columns(); track col.key) {
           <th>{{col.label}}</th>
         }
-        <th style="width: 100px;">Actions</th>
+        <th style="width: 150px;">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +24,10 @@ import { FormsModule } from '@angular/forms';
             <td>{{row[col.key]}}</td>
           }
           <td style="text-align: center;">
-            <button (click)="emitDelete(row.id)" class="delete-btn">Delete</button>
+            <div style="display: flex; gap: 8px; justify-content: center;">
+              <button (click)="emitEdit(row)" class="edit-btn">Edit</button>
+              <button (click)="emitDelete(row.id)" class="delete-btn">Delete</button>
+            </div>
           </td>
         </tr>
       }
@@ -68,28 +71,29 @@ export class CoreTableComponent {
 
   onAddRow = output<any>();
   onDeleteRow = output<number | string>();
+  // 2. New Output for Editing
+  onEditRow = output<any>(); 
 
   newEntry: any = {};
 
-  // This ensures the preview ID in the footer matches the logic in UserList/Inventory
   getNextId(): number {
     const currentData = this.data();
     if (!currentData || currentData.length === 0) return 1;
-
     const maxId = Math.max(...currentData.map(row => Number(row.id) || 0));
     return maxId + 1;
   }
 
   emitAdd() {
-    // Check if at least one field has been filled (excluding the ID)
     const hasValues = Object.values(this.newEntry).some(v => v && String(v).trim() !== '');
-
     if (hasValues) {
-      // Send a clean copy to the parent
       this.onAddRow.emit({ ...this.newEntry });
-      // Reset the object reference to clear all inputs
       this.newEntry = {};
     }
+  }
+
+  // 3. Helper method to emit the whole row object for editing
+  emitEdit(row: any) {
+    this.onEditRow.emit(row);
   }
 
   emitDelete(id: number | string) {
