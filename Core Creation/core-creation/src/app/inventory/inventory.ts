@@ -95,8 +95,8 @@ export class Inventory {
 
   private getDefaultData() {
     return [
-      { id: 1, code: 'A101', price: 5000 },
-      { id: 2, code: 'B202', price: 12000 },
+      { id: 1, code: 'A101', price: "Rs. 5,000" },
+      { id: 2, code: 'B202', price: "Rs. 12,000" },
     ];
   }
 }
