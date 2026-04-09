@@ -18,3 +18,26 @@
         letter-spacing: 0.5px;
     }
 }
+
+.table-wrapper {
+    position: relative; // Needed for the absolute loading shade
+    min-height: 400px;
+}
+
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px; // Adjust for paginator height
+    right: 0;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-container {
+    margin: 20px;
+    overflow: auto;
+}
